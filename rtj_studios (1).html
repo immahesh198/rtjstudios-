@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>RTJ STUDIO'S</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:#020813;color:#c8deff;font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;padding-bottom:72px;}
+:root{
+  --bg:#020813;--bg2:#061020;--card:#0a1830;--card2:#0d1f3a;
+  --accent:#2563eb;--accent2:#3b82f6;--glow:#60a5fa;
+  --gold:#c8a96e;--gold2:#e2c99a;
+  --tx:#c8deff;--tx2:#8aabdd;--mute:#3a5a8a;--mute2:#1a3a6a;
+  --border:rgba(37,99,235,.15);--border2:rgba(96,165,250,.3);
+  --r:16px;--r2:10px;
+}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:#020813;}
+::-webkit-scrollbar-thumb{background:#1e3a6e;border-radius:2px;}
+
+/* ═══ BACKGROUND CANVAS ═══ */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ═══ AURORA BG ═══ */
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.aurora-orb{position:absolute;border-radius:50%;filter:blur(80px);animation:aurora-float 12s ease-in-out infinite;}
+.aurora-orb:nth-child(1){width:600px;height:400px;background:radial-gradient(ellipse,rgba(37,99,235,.12),transparent 70%);top:-100px;left:-100px;animation-duration:14s;}
+.aurora-orb:nth-child(2){width:500px;height:500px;background:radial-gradient(ellipse,rgba(99,37,235,.08),transparent 70%);top:20%;right:-150px;animation-duration:18s;animation-delay:-6s;}
+.aurora-orb:nth-child(3){width:700px;height:300px;background:radial-gradient(ellipse,rgba(37,99,235,.07),transparent 70%);bottom:0;left:20%;animation-duration:20s;animation-delay:-10s;}
+@keyframes aurora-float{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(40px,-30px) scale(1.05);}66%{transform:translate(-30px,20px) scale(.95);}  }
+
+/* ═══ DISCLAIMER ═══ */
+#disclaimer{position:fixed;inset:0;z-index:9999;background:#010509;display:flex;align-items:center;justify-content:center;padding:20px;}
+.disc-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(37,99,235,.08),transparent 70%);}
+.disc-particles{position:absolute;inset:0;overflow:hidden;}
+.dp{position:absolute;width:2px;height:2px;border-radius:50%;background:#60a5fa;animation:dp-float linear infinite;}
+@keyframes dp-float{0%{transform:translateY(100vh) translateX(0);opacity:0;}10%{opacity:1;}90%{opacity:.5;}100%{transform:translateY(-10vh) translateX(30px);opacity:0;}}
+.disc-box{width:min(440px,94vw);position:relative;z-index:1;}
+.disc-glass{background:linear-gradient(145deg,rgba(10,24,48,.95),rgba(13,32,64,.9));border:1px solid rgba(96,165,250,.18);border-radius:24px;padding:40px 28px;text-align:center;position:relative;overflow:hidden;box-shadow:0 0 80px rgba(37,99,235,.15),inset 0 1px 0 rgba(255,255,255,.05);}
+.disc-glass::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% -10%,rgba(37,99,235,.15),transparent 60%);pointer-events:none;}
+.disc-glass::after{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(96,165,250,.4),transparent);}
+.disc-logo-wrap{margin-bottom:24px;}
+.disc-logo{font-family:'Cinzel',serif;font-size:30px;font-weight:900;letter-spacing:5px;background:linear-gradient(135deg,#93c5fd,#dbeafe,#60a5fa,#93c5fd);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3s linear infinite;}
+.disc-tagline{font-size:8px;letter-spacing:5px;color:var(--mute);text-transform:uppercase;margin-top:4px;}
+@keyframes shimmer{0%{background-position:0%;}100%{background-position:300%;}}
+.disc-icon-wrap{margin:8px 0 20px;position:relative;display:inline-block;}
+.disc-icon-ring{width:72px;height:72px;border-radius:50%;border:1px solid rgba(37,99,235,.3);display:flex;align-items:center;justify-content:center;margin:0 auto;position:relative;animation:ring-pulse 2s ease-in-out infinite;}
+.disc-icon-ring::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(37,99,235,.15);animation:ring-pulse 2s ease-in-out infinite .3s;}
+.disc-icon-ring::after{content:'';position:absolute;inset:-12px;border-radius:50%;border:1px solid rgba(37,99,235,.08);animation:ring-pulse 2s ease-in-out infinite .6s;}
+@keyframes ring-pulse{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.04);opacity:.8;}}
+.disc-icon{font-size:30px;}
+.disc-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:#fff;margin-bottom:10px;line-height:1.3;}
+.disc-text{font-size:12.5px;color:var(--tx2);line-height:1.9;margin-bottom:24px;padding:0 8px;}
+.disc-status{display:inline-flex;align-items:center;gap:7px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:5px 14px;font-size:9px;letter-spacing:2.5px;color:#34d399;text-transform:uppercase;margin-bottom:20px;}
+.disc-status-dot{width:6px;height:6px;border-radius:50%;background:#34d399;animation:blink 1.5s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+.disc-btn{width:100%;padding:15px;background:linear-gradient(135deg,#1a40b8,#2563eb,#3b82f6);border:1px solid rgba(96,165,250,.35);border-radius:var(--r2);color:#fff;font-size:13px;font-weight:600;letter-spacing:2px;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;position:relative;overflow:hidden;text-transform:uppercase;}
+.disc-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);transform:translateX(-100%);transition:transform .4s;}
+.disc-btn:hover{box-shadow:0 0 40px rgba(37,99,235,.6),0 0 80px rgba(37,99,235,.2);transform:translateY(-1px);}
+.disc-btn:hover::before{transform:translateX(100%);}
+
+/* ═══ INTRO ═══ */
+#intro{position:fixed;inset:0;z-index:9000;background:#010509;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#intro.hide{animation:intro-out .8s ease forwards;}
+@keyframes intro-out{to{opacity:0;transform:scale(1.06);}}
+.intro-content{text-align:center;position:relative;}
+.intro-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.2),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);animation:intro-glow-pulse 2s ease-in-out infinite;}
+@keyframes intro-glow-pulse{0%,100%{transform:translate(-50%,-50%) scale(1);}50%{transform:translate(-50%,-50%) scale(1.2);}}
+.intro-logo{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(32px,9vw,60px);letter-spacing:7px;background:linear-gradient(135deg,#3b82f6,#93c5fd,#fff,#60a5fa);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 2s linear infinite,fade-up .6s ease .2s both;position:relative;z-index:1;}
+.intro-line{width:0;height:1px;background:linear-gradient(90deg,transparent,#3b82f6,#93c5fd,transparent);margin:18px auto;animation:line-expand .8s ease .7s both;}
+@keyframes line-expand{to{width:200px;}}
+.intro-sub{font-size:9px;letter-spacing:6px;color:rgba(96,165,250,.5);text-transform:uppercase;animation:fade-up .6s ease 1s both;}
+@keyframes fade-up{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+
+/* ═══ TOP NAV ═══ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:300;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;transition:all .4s;}
+#nav.solid{background:rgba(2,8,19,.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid rgba(37,99,235,.1);}
+.nav-logo{font-family:'Cinzel',serif;font-weight:900;font-size:17px;letter-spacing:4px;background:linear-gradient(135deg,#60a5fa,#93c5fd,#dbeafe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer;transition:opacity .2s;}
+.nav-logo:hover{opacity:.8;}
+.nav-right{display:flex;gap:8px;align-items:center;}
+.nav-btn{background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.15);border-radius:8px;color:var(--tx2);padding:7px;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;}
+.nav-btn:hover{background:rgba(37,99,235,.2);color:#fff;border-color:rgba(96,165,250,.3);box-shadow:0 0 16px rgba(37,99,235,.3);}
+.nav-btn svg{width:18px;height:18px;}
+
+/* ═══ PAGE SECTIONS ═══ */
+.page-section{display:none;padding-top:58px;min-height:100vh;position:relative;z-index:1;animation:sec-in .5s ease;}
+.page-section.active{display:block;}
+@keyframes sec-in{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* ═══ HERO ═══ */
+#sec-home{padding-top:0;}
+.hero{position:relative;height:92vw;max-height:600px;min-height:380px;display:flex;align-items:flex-end;padding:0 20px 40px;overflow:hidden;}
+.hero-film-grain{position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");opacity:.4;pointer-events:none;}
+.hero-bg{position:absolute;inset:0;overflow:hidden;}
+.hero-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(37,99,235,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(37,99,235,.04) 1px,transparent 1px);background-size:40px 40px;animation:grid-pan 20s linear infinite;}
+@keyframes grid-pan{0%{background-position:0 0;}100%{background-position:40px 40px;}}
+.hero-bg-orbs{position:absolute;inset:0;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(60px);animation:hero-orb-float ease-in-out infinite;}
+.hero-orb-1{width:400px;height:300px;background:radial-gradient(ellipse,rgba(37,99,235,.25),transparent 70%);right:-50px;top:-50px;animation-duration:8s;}
+.hero-orb-2{width:300px;height:400px;background:radial-gradient(ellipse,rgba(99,37,200,.15),transparent 70%);left:-50px;bottom:50px;animation-duration:11s;animation-delay:-4s;}
+@keyframes hero-orb-float{0%,100%{transform:translate(0,0);}50%{transform:translate(20px,-20px);}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,#020813 0%,rgba(2,8,19,.75) 40%,rgba(2,8,19,.3) 70%,rgba(2,8,19,.5) 100%),linear-gradient(to right,rgba(2,8,19,.9) 0%,transparent 60%);}
+.hero-content{position:relative;z-index:2;max-width:440px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.25);border-radius:4px;padding:5px 12px;font-size:9px;letter-spacing:3.5px;color:#60a5fa;text-transform:uppercase;margin-bottom:18px;animation:fade-up .6s ease both;}
+.hero-badge-dot{width:6px;height:6px;background:#3b82f6;border-radius:50%;box-shadow:0 0 6px #3b82f6;animation:blink 2s ease infinite;}
+.hero-title{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(36px,9vw,64px);letter-spacing:2px;line-height:1.0;color:#fff;margin-bottom:16px;text-shadow:0 0 80px rgba(37,99,235,.35);animation:fade-up .6s ease .1s both;}
+.hero-title .ht-grad{background:linear-gradient(135deg,#93c5fd,#60a5fa,#dbeafe,#93c5fd);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;}
+.hero-strip{display:flex;gap:0;margin-bottom:16px;animation:fade-up .6s ease .2s both;}
+.hero-strip-item{font-size:10px;color:rgba(200,222,255,.6);display:flex;align-items:center;gap:5px;padding:0 12px;border-right:1px solid rgba(37,99,235,.2);}
+.hero-strip-item:first-child{padding-left:0;}
+.hero-strip-item:last-child{border:none;}
+.hero-desc{font-size:13.5px;color:rgba(200,222,255,.7);line-height:1.85;max-width:360px;margin-bottom:26px;animation:fade-up .6s ease .3s both;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;animation:fade-up .6s ease .4s both;}
+.btn-primary{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a40b8,#2563eb);border:1px solid rgba(96,165,250,.35);border-radius:var(--r2);padding:12px 26px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;transition:all .3s;letter-spacing:.5px;position:relative;overflow:hidden;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);transition:transform .4s;}
+.btn-primary:hover{box-shadow:0 0 30px rgba(37,99,235,.5),0 0 60px rgba(37,99,235,.15);transform:translateY(-2px);}
+.btn-primary:hover::before{transform:translateX(100%);}
+.btn-ghost{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r2);padding:12px 22px;font-size:13px;font-weight:400;color:#fff;cursor:pointer;backdrop-filter:blur(6px);transition:all .3s;}
+.btn-ghost:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);transform:translateY(-2px);}
+
+/* ═══ SCROLL REVEAL ═══ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.visible{opacity:1;transform:none;}
+
+/* ═══ FEATURED BANNER ═══ */
+.feat-banner{margin:28px 18px 8px;background:linear-gradient(135deg,rgba(37,99,235,.08),rgba(14,30,80,.4));border:1px solid rgba(37,99,235,.18);border-radius:var(--r);padding:22px 20px;display:flex;align-items:center;gap:16px;position:relative;overflow:hidden;transition:all .3s;}
+.feat-banner:hover{border-color:rgba(37,99,235,.35);box-shadow:0 0 30px rgba(37,99,235,.1);}
+.feat-banner-shine{position:absolute;inset:0;background:linear-gradient(135deg,transparent 30%,rgba(255,255,255,.02) 50%,transparent 70%);pointer-events:none;}
+.feat-banner-bg{position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.1),transparent 70%);pointer-events:none;animation:hero-orb-float 6s ease-in-out infinite;}
+.feat-icon-wrap{width:52px;height:52px;border-radius:12px;background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;transition:transform .3s;}
+.feat-banner:hover .feat-icon-wrap{transform:scale(1.05) rotate(-3deg);}
+.feat-info .feat-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:#fff;margin-bottom:5px;}
+.feat-info .feat-desc{font-size:12px;color:var(--tx2);line-height:1.65;}
+.feat-btn{background:rgba(37,99,235,.15);border:1px solid rgba(37,99,235,.3);border-radius:8px;padding:9px 16px;color:#60a5fa;font-size:11px;cursor:pointer;white-space:nowrap;transition:all .25s;font-family:'DM Sans',sans-serif;font-weight:500;}
+.feat-btn:hover{background:rgba(37,99,235,.3);box-shadow:0 0 16px rgba(37,99,235,.25);}
+
+/* ═══ SECTION HEADERS ═══ */
+.cs-wrap{padding:28px 18px 0;}
+.cs-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cs-left{display:flex;align-items:center;gap:10px;}
+.cs-dot{width:5px;height:5px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);}
+.cs-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;letter-spacing:.5px;}
+.cs-see-all{font-size:11px;color:#60a5fa;cursor:pointer;opacity:.7;transition:opacity .2s;}
+.cs-see-all:hover{opacity:1;}
+
+/* ═══ HORIZONTAL ROW ═══ */
+.h-row{display:flex;gap:12px;padding:4px 18px 12px;overflow-x:auto;scrollbar-width:none;}
+.h-row::-webkit-scrollbar{display:none;}
+
+/* ═══ CONTENT CARDS ═══ */
+.c-card{flex-shrink:0;width:168px;cursor:pointer;border-radius:var(--r2);overflow:hidden;background:var(--card);border:1px solid var(--border);transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s,border-color .35s;position:relative;}
+.c-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.6),0 0 0 1px rgba(96,165,250,.2),0 0 30px rgba(37,99,235,.1);border-color:rgba(96,165,250,.3);}
+.c-card.wide{width:250px;}
+.c-thumb{aspect-ratio:16/9;background:linear-gradient(135deg,#0a1e38,#111f40,#0a1830);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.c-card.wide .c-thumb{aspect-ratio:21/9;}
+.c-thumb-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(37,99,235,.18),transparent 70%);}
+.c-thumb-icon{font-size:28px;opacity:.25;position:relative;z-index:1;transition:transform .3s,opacity .3s;}
+.c-card:hover .c-thumb-icon{transform:scale(1.1);opacity:.4;}
+.c-overlay{position:absolute;inset:0;background:rgba(2,8,19,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .25s;backdrop-filter:blur(2px);}
+.c-card:hover .c-overlay{opacity:1;}
+.c-play{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.92);display:flex;align-items:center;justify-content:center;transform:scale(.8);transition:transform .25s;box-shadow:0 0 20px rgba(255,255,255,.3);}
+.c-card:hover .c-play{transform:scale(1);}
+.c-play svg{width:14px;height:14px;margin-left:3px;}
+.c-info{padding:10px 12px 12px;}
+.c-title{font-size:12px;font-weight:500;color:#fff;margin-bottom:3px;line-height:1.4;}
+.c-sub{font-size:10px;color:var(--mute);}
+.c-badge{position:absolute;top:8px;left:8px;border-radius:4px;padding:2px 7px;font-size:8px;letter-spacing:1px;font-weight:600;}
+.c-badge-soon{background:rgba(37,99,235,.85);}
+.c-badge-new{background:rgba(16,185,129,.85);}
+.c-badge-orig{background:rgba(139,92,246,.85);}
+
+/* ═══ STATS ROW ═══ */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 18px;margin:8px 0;}
+.stat-card{background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(37,99,235,.02));border:1px solid rgba(37,99,235,.12);border-radius:var(--r2);padding:16px 12px;text-align:center;transition:all .3s;}
+.stat-card:hover{border-color:rgba(37,99,235,.25);background:linear-gradient(135deg,rgba(37,99,235,.1),rgba(37,99,235,.04));}
+.stat-num{font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#fff;background:linear-gradient(135deg,#60a5fa,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-lb{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mute);margin-top:3px;}
+
+/* ═══ BROWSE ═══ */
+.browse-hero{padding:32px 18px 24px;}
+.browse-hero-sub{font-size:12px;color:var(--tx2);line-height:1.7;margin-top:6px;}
+.browse-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0 18px 24px;}
+.browse-cat{background:linear-gradient(135deg,var(--card),var(--card2));border:1px solid var(--border);border-radius:var(--r);padding:24px 16px;text-align:center;cursor:pointer;transition:all .35s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;}
+.browse-cat::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.browse-cat:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 16px 40px rgba(0,0,0,.5);}
+.browse-cat:nth-child(1)::before{background:radial-gradient(ellipse at 50% 50%,rgba(37,99,235,.1),transparent 70%);}
+.browse-cat:nth-child(2)::before{background:radial-gradient(ellipse at 50% 50%,rgba(139,92,246,.1),transparent 70%);}
+.browse-cat:nth-child(3)::before{background:radial-gradient(ellipse at 50% 50%,rgba(236,72,153,.1),transparent 70%);}
+.browse-cat:nth-child(4)::before{background:radial-gradient(ellipse at 50% 50%,rgba(245,158,11,.1),transparent 70%);}
+.browse-cat:hover::before{opacity:1;}
+.browse-cat-icon{font-size:32px;margin-bottom:10px;display:block;transition:transform .3s;}
+.browse-cat:hover .browse-cat-icon{transform:scale(1.15) rotate(-5deg);}
+.browse-cat-name{font-size:14px;color:#fff;font-weight:500;margin-bottom:4px;}
+.browse-cat-sub{font-size:10px;color:var(--mute);}
+.browse-cat-badge{display:inline-block;margin-top:8px;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:2px 10px;font-size:9px;color:#60a5fa;}
+
+/* ═══ PLANS ═══ */
+.plans-hero-wrap{padding:40px 20px 28px;text-align:center;position:relative;}
+.plans-hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(37,99,235,.05),transparent 70%);pointer-events:none;}
+.plans-eyebrow{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.plans-title{font-family:'Cinzel',serif;font-weight:900;font-size:clamp(28px,7vw,46px);letter-spacing:2px;background:linear-gradient(135deg,#fff,#93c5fd,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.plans-desc{font-size:13px;color:var(--tx2);line-height:1.8;max-width:340px;margin:0 auto;}
+.plans-grid{display:flex;flex-direction:column;gap:14px;padding:0 18px 24px;max-width:480px;margin:0 auto;}
+.plan{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:26px 22px;position:relative;transition:all .3s;}
+.plan:hover{border-color:rgba(37,99,235,.3);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.plan.featured{background:linear-gradient(160deg,#0a1e50,#0d2248,#0a1830);border-color:rgba(37,99,235,.4);box-shadow:0 0 50px rgba(37,99,235,.12);}
+.plan.featured:hover{box-shadow:0 0 60px rgba(37,99,235,.2);}
+.plan-pop{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#1a40b8,#2563eb);border-radius:20px;padding:4px 18px;font-size:9px;letter-spacing:2px;color:#fff;white-space:nowrap;font-weight:600;}
+.plan-name{font-family:'Cinzel',serif;font-size:11px;letter-spacing:4px;color:var(--mute);margin-bottom:14px;}
+.plan.featured .plan-name{color:#93c5fd;}
+.plan-price-row{display:flex;align-items:baseline;gap:2px;margin-bottom:6px;}
+.plan-cur{font-size:18px;color:#fff;}
+.plan-amt{font-family:'Cinzel',serif;font-size:46px;color:#fff;font-weight:700;line-height:1;}
+.plan-period{font-size:12px;color:var(--mute);margin-left:3px;}
+.plan-tag{font-size:8px;letter-spacing:2.5px;color:var(--accent2);text-transform:uppercase;margin-bottom:20px;}
+.plan-feats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
+.plan-feats li{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--tx2);}
+.feat-check{width:17px;height:17px;border-radius:50%;background:rgba(37,99,235,.12);border:1px solid rgba(37,99,235,.28);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.feat-check svg{width:9px;height:9px;color:#60a5fa;}
+.plan-cta{width:100%;padding:14px;border:none;border-radius:var(--r2);font-size:12.5px;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .3s;font-family:'DM Sans',sans-serif;text-transform:uppercase;position:relative;overflow:hidden;}
+.plan-cta::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);transition:transform .4s;}
+.plan-cta:hover::before{transform:translateX(100%);}
+.plan.featured .plan-cta{background:linear-gradient(135deg,#1a40b8,#2563eb);color:#fff;border:1px solid rgba(96,165,250,.3);box-shadow:0 4px 20px rgba(37,99,235,.3);}
+.plan.featured .plan-cta:hover{box-shadow:0 8px 30px rgba(37,99,235,.5);transform:translateY(-1px);}
+.plan:not(.featured) .plan-cta{background:rgba(37,99,235,.08);color:#93c5fd;border:1px solid rgba(37,99,235,.2);}
+.plan:not(.featured) .plan-cta:hover{background:rgba(37,99,235,.18);}
+.why-section{padding:24px 18px 32px;max-width:560px;margin:0 auto;}
+.why-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:#fff;margin-bottom:18px;}
+.why-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(37,99,235,.07);transition:all .2s;}
+.why-item:last-child{border:none;}
+.why-item:hover{padding-left:6px;}
+.why-ic{width:44px;height:44px;border-radius:var(--r2);background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.14);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;transition:all .3s;}
+.why-item:hover .why-ic{background:rgba(37,99,235,.15);border-color:rgba(37,99,235,.3);}
+.why-name{font-size:13px;font-weight:500;color:#fff;margin-bottom:4px;}
+.why-desc{font-size:12px;color:var(--tx2);line-height:1.7;}
+
+/* ═══ MORE ═══ */
+.more-hero{padding:32px 18px 20px;}
+.more-list{padding:0 18px;display:flex;flex-direction:column;gap:7px;}
+.more-item{display:flex;align-items:center;gap:14px;padding:15px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r2);cursor:pointer;transition:all .3s;position:relative;overflow:hidden;}
+.more-item::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(37,99,235,.05),transparent);opacity:0;transition:opacity .3s;}
+.more-item:hover{background:var(--card2);border-color:var(--border2);transform:translateX(4px);}
+.more-item:hover::before{opacity:1;}
+.more-ic{font-size:18px;width:30px;text-align:center;}
+.more-info{flex:1;}
+.more-name{font-size:13px;color:#fff;margin-bottom:2px;}
+.more-desc{font-size:11px;color:var(--mute);}
+.more-arr{color:var(--mute);font-size:18px;transition:transform .2s;}
+.more-item:hover .more-arr{transform:translateX(3px);}
+.more-divider{padding:16px 18px 6px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--mute);}
+
+/* ═══ SETTINGS PANEL ═══ */
+#settings-panel{position:fixed;inset:0;z-index:900;background:rgba(2,5,12,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);display:none;align-items:flex-end;}
+#settings-panel.open{display:flex;}
+.settings-box{width:100%;max-height:90vh;background:linear-gradient(180deg,#070f1e,#05091a);border-radius:22px 22px 0 0;border-top:1px solid rgba(37,99,235,.2);overflow-y:auto;animation:slide-up .38s cubic-bezier(.34,1.56,.64,1);}
+@keyframes slide-up{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.settings-handle{width:36px;height:4px;background:var(--mute2);border-radius:2px;margin:12px auto;}
+.settings-head{display:flex;align-items:center;justify-content:space-between;padding:14px 20px 12px;border-bottom:1px solid rgba(37,99,235,.1);}
+.settings-title{font-family:'Cinzel',serif;font-size:15px;letter-spacing:3px;color:#fff;}
+.settings-close{background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.18);border-radius:6px;color:var(--tx2);font-size:15px;cursor:pointer;padding:4px 10px;transition:all .2s;}
+.settings-close:hover{background:rgba(37,99,235,.2);color:#fff;}
+.settings-body{padding:14px 20px 0;}
+.sg-label{font-size:8px;letter-spacing:3.5px;text-transform:uppercase;color:var(--mute);margin:14px 0 7px;}
+.sr{display:flex;align-items:center;gap:13px;padding:13px 14px;background:rgba(37,99,235,.04);border:1px solid rgba(37,99,235,.08);border-radius:var(--r2);margin-bottom:5px;cursor:pointer;transition:all .2s;}
+.sr:hover{background:rgba(37,99,235,.09);border-color:rgba(37,99,235,.16);}
+.sr-ic{font-size:16px;width:26px;text-align:center;}
+.sr-info{flex:1;}
+.sr-name{font-size:13px;color:#fff;}
+.sr-desc{font-size:10px;color:var(--mute);margin-top:2px;}
+.sr-arr{color:var(--mute);font-size:16px;transition:transform .2s;}
+.sr:hover .sr-arr{transform:translateX(2px);}
+.tog{width:44px;height:24px;border-radius:12px;background:rgba(255,255,255,.08);border:1px solid var(--border);cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;}
+.tog.on{background:rgba(37,99,235,.5);border-color:rgba(37,99,235,.6);}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .25s;box-shadow:0 1px 4px rgba(0,0,0,.3);}
+.tog.on::after{left:23px;}
+.creator-pw-form{margin-top:8px;display:none;}
+.creator-pw-form.show{display:block;}
+.creator-inp{width:100%;background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.18);border-radius:var(--r2);padding:12px 14px;color:#fff;font-size:14px;letter-spacing:4px;text-align:center;outline:none;margin-bottom:8px;transition:border-color .2s;}
+.creator-inp:focus{border-color:rgba(96,165,250,.4);box-shadow:0 0 12px rgba(37,99,235,.15);}
+.creator-unlock-btn{width:100%;padding:12px;background:linear-gradient(135deg,#1a40b8,#2563eb);border:none;border-radius:var(--r2);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .3s;}
+.creator-unlock-btn:hover{box-shadow:0 0 20px rgba(37,99,235,.4);}
+.creator-reveal{display:none;text-align:center;padding:10px 0;}
+.creator-reveal.show{display:block;animation:fade-up .5s ease;}
+.creator-av{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#1a40b8,#2563eb);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 12px;box-shadow:0 0 30px rgba(37,99,235,.45);}
+.creator-name{font-family:'Cinzel',serif;font-size:20px;color:#fff;letter-spacing:3px;margin-bottom:4px;}
+.creator-role{font-size:9px;letter-spacing:3px;color:var(--mute);text-transform:uppercase;margin-bottom:10px;}
+.creator-note{font-size:12.5px;color:var(--tx2);line-height:1.9;}
+.creator-err{font-size:11px;color:#f87171;margin-top:6px;text-align:center;display:none;}
+.settings-footer{text-align:center;padding:22px;border-top:1px solid rgba(37,99,235,.07);margin-top:16px;}
+.settings-footer-logo{font-family:'Cinzel',serif;font-size:13px;letter-spacing:3px;color:rgba(96,165,250,.4);margin-bottom:5px;}
+.settings-footer-text{font-size:10px;color:var(--mute);line-height:1.9;}
+
+/* ═══ MODAL ═══ */
+.modal{display:none;position:fixed;inset:0;z-index:800;background:rgba(2,5,12,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);align-items:center;justify-content:center;}
+.modal.open{display:flex;animation:modal-in .3s ease;}
+@keyframes modal-in{from{opacity:0;}to{opacity:1;}}
+.modal-box{background:#06101e;border:1px solid rgba(37,99,235,.2);border-radius:var(--r);width:min(540px,96vw);max-height:90vh;overflow-y:auto;animation:modal-box-in .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes modal-box-in{from{transform:scale(.94);opacity:0;}to{transform:scale(1);opacity:1;}}
+.modal-head{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid rgba(37,99,235,.1);}
+.modal-title{flex:1;font-size:14px;font-weight:500;color:#fff;}
+.modal-close{background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.18);border-radius:6px;color:var(--tx2);font-size:14px;cursor:pointer;padding:4px 10px;transition:all .2s;}
+.modal-close:hover{background:rgba(37,99,235,.2);color:#fff;}
+#vmod-body video,#vmod-body img{width:100%;display:block;}
+#vmod-body .vmod-info{padding:14px 16px 18px;}
+#vmod-body .vmod-title{font-size:14px;font-weight:500;color:#fff;margin-bottom:3px;}
+#vmod-body .vmod-meta{font-size:11px;color:var(--mute);}
+
+/* ═══ TOAST ═══ */
+#toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(6,16,30,.96);border:1px solid rgba(37,99,235,.25);border-radius:var(--r2);padding:11px 20px;font-size:12.5px;color:#fff;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap;backdrop-filter:blur(12px);box-shadow:0 8px 30px rgba(0,0,0,.5);}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ═══ BOTTOM NAV ═══ */
+#bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(3,7,18,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid rgba(37,99,235,.1);display:flex;align-items:stretch;padding-bottom:env(safe-area-inset-bottom);}
+.bnav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:9px 4px;background:none;border:none;cursor:pointer;color:var(--mute);transition:all .25s;position:relative;}
+.bnav-item.active{color:#60a5fa;}
+.bnav-item.active::before{content:'';position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,#2563eb,transparent);border-radius:0 0 2px 2px;}
+.bnav-item:hover:not(.active){color:var(--tx2);}
+.bnav-ic svg{width:22px;height:22px;transition:transform .25s;}
+.bnav-item.active .bnav-ic svg{transform:scale(1.08);}
+.bnav-lb{font-size:9px;letter-spacing:.3px;white-space:nowrap;}
+
+/* ═══ UTILS ═══ */
+.grad-text{background:linear-gradient(135deg,#93c5fd,#60a5fa,#dbeafe,#93c5fd);background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 5s linear infinite;}
+.eyebrow{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--accent2);margin-bottom:8px;}
+.section-title{font-family:'Cinzel',serif;font-size:28px;font-weight:900;letter-spacing:2px;}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+<div class="aurora">
+  <div class="aurora-orb"></div>
+  <div class="aurora-orb"></div>
+  <div class="aurora-orb"></div>
+</div>
+
+<!-- ═══ DISCLAIMER ═══ -->
+<div id="disclaimer">
+  <div class="disc-bg"></div>
+  <div class="disc-particles" id="disc-particles"></div>
+  <div class="disc-box">
+    <div class="disc-glass">
+      <div class="disc-logo-wrap">
+        <div class="disc-logo">RTJ STUDIO'S</div>
+        <div class="disc-tagline">Private · Exclusive · Streaming</div>
+      </div>
+      <div class="disc-icon-wrap">
+        <div class="disc-icon-ring"><div class="disc-icon">🎬</div></div>
+      </div>
+      <div class="disc-title">Under Development &amp; Testing</div>
+      <div class="disc-status"><span class="disc-status-dot"></span>Beta Release — v0.1</div>
+      <div class="disc-text">This platform is in its development and testing phase. Content is actively being curated and will be available soon. Some features may be incomplete or subject to change.</div>
+      <button class="disc-btn" onclick="closeDisclaimer()">✦ &nbsp;I Understand — Enter Studio&nbsp; ✦</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ INTRO ═══ -->
+<div id="intro">
+  <div class="intro-content">
+    <div class="intro-glow"></div>
+    <div class="intro-logo">RTJ STUDIO'S</div>
+    <div class="intro-line"></div>
+    <div class="intro-sub">Streaming · Originals · Exclusives</div>
+  </div>
+</div>
+
+<!-- ═══ TOP NAV ═══ -->
+<div id="nav">
+  <div class="nav-logo" onclick="goTo('home')">RTJ STUDIO'S</div>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="openSettings()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SETTINGS ═══ -->
+<div id="settings-panel" onclick="if(event.target===this)closeSettings()">
+  <div class="settings-box">
+    <div class="settings-handle"></div>
+    <div class="settings-head">
+      <div class="settings-title">SETTINGS</div>
+      <button class="settings-close" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="settings-body">
+      <div class="sg-label">Playback</div>
+      <div class="sr" style="cursor:default;">
+        <div class="sr-ic">▶</div>
+        <div class="sr-info"><div class="sr-name">Autoplay Videos</div><div class="sr-desc">Videos play automatically when opened</div></div>
+        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="sr" style="cursor:default;">
+        <div class="sr-ic">📶</div>
+        <div class="sr-info"><div class="sr-name">High Quality Streaming</div><div class="sr-desc">4K Ultra HD when available</div></div>
+        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="sg-label">About</div>
+      <div class="sr" onclick="toggleCreatorForm()">
+        <div class="sr-ic">🎬</div>
+        <div class="sr-info"><div class="sr-name">Who Built This?</div><div class="sr-desc">Password protected — owner information</div></div>
+        <div class="sr-arr">›</div>
+      </div>
+      <div class="creator-pw-form" id="creator-pw-form">
+        <input class="creator-inp" id="creator-inp" type="password" placeholder="Enter access code" maxlength="10" onkeydown="if(event.key==='Enter')checkCreatorPW()">
+        <button class="creator-unlock-btn" onclick="checkCreatorPW()">🔓 &nbsp;Unlock Owner Info</button>
+        <div class="creator-err" id="creator-err">Incorrect code. Try again.</div>
+        <div class="creator-reveal" id="creator-reveal">
+          <br>
+          <div class="creator-av">M</div>
+          <div class="creator-name">MAHESH SHINDE</div>
+          <div class="creator-role">Creator · Designer · Developer</div>
+          <div class="creator-note">Every word, every animation, every detail — conceived and built with genuine care, over many hours. June 2025 – present.</div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:12px;">
+            <span style="background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.15);border-radius:20px;padding:3px 12px;font-size:10px;color:#60a5fa;">June 2025 – present</span>
+            <span style="background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.15);border-radius:20px;padding:3px 12px;font-size:10px;color:#60a5fa;">RTJ STUDIO'S ❤</span>
+          </div>
+        </div>
+      </div>
+      <div class="sr" onclick="showToast('RTJ STUDIO\'S Support coming soon ✦')">
+        <div class="sr-ic">💬</div>
+        <div class="sr-info"><div class="sr-name">Help &amp; Support</div><div class="sr-desc">Contact the studio team</div></div>
+        <div class="sr-arr">›</div>
+      </div>
+    </div>
+    <div class="settings-footer">
+      <div class="settings-footer-logo">RTJ STUDIO'S</div>
+      <div class="settings-footer-text">© 2026 RTJ Studio's — All Rights Reserved<br>Unauthorized reproduction or distribution is strictly prohibited.<br><span style="color:rgba(74,106,154,.35);font-size:9px;letter-spacing:1px;">Private · Exclusive · Confidential</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VIDEO MODAL ═══ -->
+<div class="modal" id="vmod" onclick="if(event.target===this)closeVideoModal()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title" id="vmod-title">Now Playing</div>
+      <button class="modal-close" onclick="closeVideoModal()">✕</button>
+    </div>
+    <div id="vmod-body"></div>
+  </div>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="page-section active" id="sec-home" style="display:block;">
+  <div class="hero">
+    <div class="hero-film-grain"></div>
+    <div class="hero-bg">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-bg-orbs">
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+      </div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="hero-badge-dot"></span>&nbsp;RTJ ORIGINALS</div>
+      <div class="hero-title">Stream.<br><span class="ht-grad">Experience.</span></div>
+      <div class="hero-strip">
+        <div class="hero-strip-item">🎬 Exclusive</div>
+        <div class="hero-strip-item">4K Ultra HD</div>
+        <div class="hero-strip-item">Private Studio</div>
+      </div>
+      <div class="hero-desc">RTJ STUDIO'S — your exclusive private streaming platform. Curated content, uploaded personally, just for you.</div>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showToast('Content coming soon ✦')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Browse Studio
+        </button>
+        <button class="btn-ghost" onclick="openSettings()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="2.5"/></svg>
+          Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-row reveal">
+    <div class="stat-card"><div class="stat-num">4K</div><div class="stat-lb">Ultra HD</div></div>
+    <div class="stat-card"><div class="stat-num">∞</div><div class="stat-lb">Originals</div></div>
+    <div class="stat-card"><div class="stat-num">100%</div><div class="stat-lb">Private</div></div>
+  </div>
+
+  <div class="feat-banner reveal">
+    <div class="feat-banner-shine"></div>
+    <div class="feat-banner-bg"></div>
+    <div class="feat-icon-wrap">🎬</div>
+    <div class="feat-info">
+      <div class="feat-title">RTJ Originals — Coming Soon</div>
+      <div class="feat-desc">Exclusive content is being curated and will appear here. Check back soon.</div>
+    </div>
+    <button class="feat-btn" onclick="showToast('You\'ll be notified ✦')">Notify Me</button>
+  </div>
+
+  <div class="cs-wrap reveal">
+    <div class="cs-header">
+      <div class="cs-left"><div class="cs-dot"></div><div class="cs-title">Continue Watching</div></div>
+      <div class="cs-see-all" onclick="showToast('All content coming soon ✦')">See all</div>
+    </div>
+    <div class="h-row" id="home-myvideos-row">
+      <div style="padding:4px 2px;color:#3a5a8a;font-size:12px;display:flex;align-items:center;gap:8px;">
+        <span style="animation:blink 1.5s ease infinite;display:inline-block;color:#3b82f6;">●</span>
+        <span>Loading from studio...</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-wrap reveal">
+    <div class="cs-header">
+      <div class="cs-left"><div class="cs-dot"></div><div class="cs-title">New Releases</div></div>
+      <div class="cs-see-all" onclick="showToast('All releases coming soon ✦')">See all</div>
+    </div>
+    <div class="h-row" id="new-releases-row">
+      <div class="c-card wide" onclick="showToast('Content coming soon ✦')">
+        <div class="c-thumb"><div class="c-thumb-glow"></div><span class="c-thumb-icon">🎥</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><span class="c-badge c-badge-soon">SOON</span></div>
+        <div class="c-info"><div class="c-title">RTJ Original — Episode 1</div><div class="c-sub">Upload to begin streaming</div></div>
+      </div>
+      <div class="c-card wide" onclick="showToast('More arriving soon ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#08182c,#0a2433);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">📽️</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div></div>
+        <div class="c-info"><div class="c-title">Studio Exclusive</div><div class="c-sub">Coming soon</div></div>
+      </div>
+      <div class="c-card wide" onclick="showToast('RTJ STUDIO\'S ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#0e0222,#180828);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">🌌</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><span class="c-badge c-badge-orig">ORIGINAL</span></div>
+        <div class="c-info"><div class="c-title">RTJ Cinematic</div><div class="c-sub">Original production</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-wrap reveal">
+    <div class="cs-header">
+      <div class="cs-left"><div class="cs-dot"></div><div class="cs-title">Spotlight</div></div>
+    </div>
+    <div class="h-row">
+      <div class="c-card" onclick="showToast('Spotlight picks ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#08101e,#101828);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">⭐</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div></div>
+        <div class="c-info"><div class="c-title">Curated Pick</div><div class="c-sub">Featured</div></div>
+      </div>
+      <div class="c-card" onclick="showToast('More content soon ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#081e10,#0a1e1a);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">🎭</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div></div>
+        <div class="c-info"><div class="c-title">Studio Picks</div><div class="c-sub">Selected</div></div>
+      </div>
+      <div class="c-card" onclick="showToast('Trending now ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#1a0a04,#2a1004);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">🔥</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div></div>
+        <div class="c-info"><div class="c-title">Trending</div><div class="c-sub">This week</div></div>
+      </div>
+      <div class="c-card" onclick="showToast('Exclusive content ✦')">
+        <div class="c-thumb" style="background:linear-gradient(135deg,#120a22,#1a1030);"><div class="c-thumb-glow"></div><span class="c-thumb-icon">💎</span><div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><span class="c-badge c-badge-new">NEW</span></div>
+        <div class="c-info"><div class="c-title">Premium Exclusive</div><div class="c-sub">Members only</div></div>
+      </div>
+    </div>
+  </div>
+  <div style="height:16px;"></div>
+</div>
+
+<!-- ═══ BROWSE ═══ -->
+<div class="page-section" id="sec-browse">
+  <div class="browse-hero reveal">
+    <div class="eyebrow">Discover</div>
+    <div class="section-title grad-text">Browse</div>
+    <div class="browse-hero-sub">Explore all content categories across RTJ STUDIO'S.</div>
+  </div>
+  <div class="browse-grid reveal">
+    <div class="browse-cat" onclick="showToast('Videos — Coming Soon ✦')">
+      <span class="browse-cat-icon">🎥</span>
+      <div class="browse-cat-name">Videos</div>
+      <div class="browse-cat-sub">Films & clips</div>
+      <div class="browse-cat-badge">Coming Soon</div>
+    </div>
+    <div class="browse-cat" onclick="showToast('Music — Coming Soon ✦')">
+      <span class="browse-cat-icon">🎵</span>
+      <div class="browse-cat-name">Music</div>
+      <div class="browse-cat-sub">Audio tracks</div>
+      <div class="browse-cat-badge">Coming Soon</div>
+    </div>
+    <div class="browse-cat" onclick="showToast('Originals — Exclusive ✦')">
+      <span class="browse-cat-icon">🌟</span>
+      <div class="browse-cat-name">Originals</div>
+      <div class="browse-cat-sub">RTJ exclusives</div>
+      <div class="browse-cat-badge">Exclusive</div>
+    </div>
+    <div class="browse-cat" onclick="showToast('Shorts — Coming Soon ✦')">
+      <span class="browse-cat-icon">⚡</span>
+      <div class="browse-cat-name">Shorts</div>
+      <div class="browse-cat-sub">Quick clips</div>
+      <div class="browse-cat-badge">Coming Soon</div>
+    </div>
+    <div class="browse-cat" onclick="showToast('Live — Coming Soon ✦')">
+      <span class="browse-cat-icon">📡</span>
+      <div class="browse-cat-name">Live</div>
+      <div class="browse-cat-sub">Real-time streams</div>
+      <div class="browse-cat-badge">Soon</div>
+    </div>
+    <div class="browse-cat" onclick="showToast('Gallery — Coming Soon ✦')">
+      <span class="browse-cat-icon">🖼️</span>
+      <div class="browse-cat-name">Gallery</div>
+      <div class="browse-cat-sub">Photo sets</div>
+      <div class="browse-cat-badge">Soon</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PLANS ═══ -->
+<div class="page-section" id="sec-plans">
+  <div class="plans-hero-wrap reveal">
+    <div class="plans-hero-glow"></div>
+    <div class="plans-eyebrow">RTJ STUDIO'S</div>
+    <div class="plans-title">Choose Your Plan</div>
+    <div class="plans-desc">Unlock the complete RTJ STUDIO'S experience. Stream, collect, and access exclusive content.</div>
+  </div>
+  <div class="plans-grid reveal">
+    <div class="plan">
+      <div class="plan-name">BASIC</div>
+      <div class="plan-price-row"><span class="plan-cur">₹</span><span class="plan-amt">149</span><span class="plan-period">/ month</span></div>
+      <div class="plan-tag">30 DAY FREE TRIAL</div>
+      <ul class="plan-feats">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Full HD Streaming (1080p)</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Up to 10 uploads / month</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>2 GB secure storage</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>1 device access</li>
+      </ul>
+      <button class="plan-cta" onclick="showToast('Basic plan selected ✦')">Get Started</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-pop">MOST POPULAR</div>
+      <div class="plan-name">STANDARD</div>
+      <div class="plan-price-row"><span class="plan-cur">₹</span><span class="plan-amt">299</span><span class="plan-period">/ month</span></div>
+      <div class="plan-tag">BEST VALUE</div>
+      <ul class="plan-feats">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>4K Ultra HD streaming</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited uploads</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>50 GB private storage</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>3 devices simultaneously</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>RTJ Originals access</li>
+      </ul>
+      <button class="plan-cta" onclick="showToast('Standard plan selected ✦')">Subscribe Now</button>
+    </div>
+    <div class="plan">
+      <div class="plan-name">PREMIUM</div>
+      <div class="plan-price-row"><span class="plan-cur">₹</span><span class="plan-amt">499</span><span class="plan-period">/ month</span></div>
+      <div class="plan-tag">ALL FEATURES</div>
+      <ul class="plan-feats">
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>8K streaming support</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Unlimited everything</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>500 GB storage</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>6 devices + sharing</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Custom studio branding</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Priority &amp; dedicated support</li>
+        <li><div class="feat-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>Early access content</li>
+      </ul>
+      <button class="plan-cta" onclick="showToast('Premium plan selected ✦')">Go Premium</button>
+    </div>
+  </div>
+  <div class="why-section reveal">
+    <div class="why-title">Why RTJ STUDIO'S?</div>
+    <div class="why-item"><div class="why-ic">🎬</div><div><div class="why-name">Upload &amp; Stream Instantly</div><div class="why-desc">Your personal studio. Upload and stream instantly in cinematic quality.</div></div></div>
+    <div class="why-item"><div class="why-ic">🔒</div><div><div class="why-name">100% Private &amp; Secure</div><div class="why-desc">Private vaults, end-to-end privacy, zero external data sharing.</div></div></div>
+    <div class="why-item"><div class="why-ic">📱</div><div><div class="why-name">Watch on Any Device</div><div class="why-desc">Seamless experience across mobile, tablet, and desktop.</div></div></div>
+    <div class="why-item"><div class="why-ic">⚡</div><div><div class="why-name">Lightning Performance</div><div class="why-desc">Smart local caching for instant playback and offline viewing.</div></div></div>
+  </div>
+</div>
+
+<!-- ═══ MORE ═══ -->
+<div class="page-section" id="sec-more">
+  <div class="more-hero reveal">
+    <div class="eyebrow">Navigation</div>
+    <div class="section-title grad-text">More</div>
+  </div>
+  <div class="more-divider">Quick Links</div>
+  <div class="more-list reveal">
+    <div class="more-item" onclick="goTo('home')"><div class="more-ic">🏠</div><div class="more-info"><div class="more-name">Home</div><div class="more-desc">Back to studio home</div></div><div class="more-arr">›</div></div>
+    <div class="more-item" onclick="goTo('browse')"><div class="more-ic">🔍</div><div class="more-info"><div class="more-name">Browse</div><div class="more-desc">Explore all categories</div></div><div class="more-arr">›</div></div>
+    <div class="more-item" onclick="goTo('plans')"><div class="more-ic">⭐</div><div class="more-info"><div class="more-name">Subscription Plans</div><div class="more-desc">View and manage your plan</div></div><div class="more-arr">›</div></div>
+    <div class="more-item" onclick="openSettings()"><div class="more-ic">⚙️</div><div class="more-info"><div class="more-name">Settings</div><div class="more-desc">Preferences, privacy &amp; about</div></div><div class="more-arr">›</div></div>
+  </div>
+  <div class="more-divider" style="margin-top:8px;">Studio</div>
+  <div class="more-list">
+    <div class="more-item" onclick="showToast('Uploads coming soon ✦')"><div class="more-ic">📤</div><div class="more-info"><div class="more-name">Upload Content</div><div class="more-desc">Add videos to your studio</div></div><div class="more-arr">›</div></div>
+    <div class="more-item" onclick="showToast('Analytics coming soon ✦')"><div class="more-ic">📊</div><div class="more-info"><div class="more-name">Analytics</div><div class="more-desc">View your studio stats</div></div><div class="more-arr">›</div></div>
+    <div class="more-item" onclick="showToast('Notifications coming soon ✦')"><div class="more-ic">🔔</div><div class="more-info"><div class="more-name">Notifications</div><div class="more-desc">Studio alerts and updates</div></div><div class="more-arr">›</div></div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav id="bottom-nav">
+  <button class="bnav-item active" id="bn-home" onclick="goTo('home')">
+    <span class="bnav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+    <span class="bnav-lb">Home</span>
+  </button>
+  <button class="bnav-item" id="bn-browse" onclick="goTo('browse')">
+    <span class="bnav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+    <span class="bnav-lb">Browse</span>
+  </button>
+  <button class="bnav-item" id="bn-plans" onclick="goTo('plans')">
+    <span class="bnav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></span>
+    <span class="bnav-lb">Plans</span>
+  </button>
+  <button class="bnav-item" id="bn-more" onclick="goTo('more')">
+    <span class="bnav-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg></span>
+    <span class="bnav-lb">More</span>
+  </button>
+</nav>
+
+<div id="toast"></div>
+
+<script>
+/* ═══ STARFIELD ═══ */
+(function(){
+  var c=document.getElementById('bg-canvas'),ctx,stars=[],mouse={x:0,y:0};
+  if(!c)return;
+  ctx=c.getContext('2d');
+  function resize(){
+    c.width=innerWidth;c.height=innerHeight;
+    stars=[];
+    var n=Math.floor(c.width*c.height/2500);
+    for(var i=0;i<n;i++){
+      stars.push({
+        x:Math.random()*c.width,y:Math.random()*c.height,
+        r:Math.random()*1.2+.1,
+        a:Math.random(),da:(Math.random()-.5)*.003,
+        speed:Math.random()*.15+.05,
+        ox:0,oy:0
+      });
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(function(s){
+      s.a+=s.da;
+      if(s.a<.05)s.da=Math.abs(s.da);
+      if(s.a>1)s.da=-Math.abs(s.da);
+      s.y-=s.speed;
+      if(s.y<-2)s.y=c.height+2;
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(180,210,255,'+s.a.toFixed(2)+')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',resize,{passive:true});
+  resize();draw();
+})();
+
+/* ═══ DISCLAIMER PARTICLES ═══ */
+(function(){
+  var c=document.getElementById('disc-particles');
+  if(!c)return;
+  for(var i=0;i<14;i++){
+    var p=document.createElement('div');
+    p.className='dp';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(4+Math.random()*6)+'s';
+    p.style.animationDelay=(-Math.random()*10)+'s';
+    p.style.opacity=Math.random()*.6+.2;
+    p.style.width=p.style.height=(1+Math.random()*2)+'px';
+    c.appendChild(p);
+  }
+})();
+
+/* ═══ SCROLL REVEAL ═══ */
+var _revObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');_revObs.unobserve(e.target);}});
+},{threshold:.08});
+function observeReveals(){document.querySelectorAll('.reveal').forEach(function(el){_revObs.observe(el);});}
+observeReveals();
+
+/* ═══ DISCLAIMER ═══ */
+function closeDisclaimer(){
+  var d=document.getElementById('disclaimer');
+  d.style.transition='opacity .7s ease';d.style.opacity='0';
+  setTimeout(function(){d.style.display='none';startIntro();},700);
+}
+
+/* ═══ INTRO ═══ */
+function startIntro(){
+  var i=document.getElementById('intro');
+  i.style.display='flex';
+  setTimeout(function(){
+    i.classList.add('hide');
+    setTimeout(function(){i.style.display='none';},800);
+  },2000);
+}
+
+/* ═══ NAV SCROLL ═══ */
+window.addEventListener('scroll',function(){
+  document.getElementById('nav').classList.toggle('solid',scrollY>20);
+},{passive:true});
+
+/* ═══ NAVIGATION ═══ */
+function goTo(sec){
+  document.querySelectorAll('.page-section').forEach(function(el){el.classList.remove('active');el.style.display='';});
+  document.querySelectorAll('.bnav-item').forEach(function(el){el.classList.remove('active');});
+  var el=document.getElementById('sec-'+sec);
+  if(el){el.classList.add('active');el.style.display='block';}
+  var bn=document.getElementById('bn-'+sec);if(bn)bn.classList.add('active');
+  scrollTo({top:0,behavior:'smooth'});
+  setTimeout(observeReveals,100);
+  if(sec==='home')loadHomeVideos();
+}
+
+/* ═══ TOAST ═══ */
+var _tt;
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(_tt);_tt=setTimeout(function(){t.classList.remove('show');},2800);
+}
+
+/* ═══ SETTINGS ═══ */
+function openSettings(){document.getElementById('settings-panel').classList.add('open');}
+function closeSettings(){document.getElementById('settings-panel').classList.remove('open');}
+function toggleCreatorForm(){
+  var f=document.getElementById('creator-pw-form');
+  f.classList.toggle('show');
+  if(f.classList.contains('show'))document.getElementById('creator-inp').focus();
+}
+function checkCreatorPW(){
+  var inp=document.getElementById('creator-inp'),err=document.getElementById('creator-err'),rev=document.getElementById('creator-reveal');
+  if(inp.value==='RTJ25'){
+    rev.classList.add('show');err.style.display='none';
+    inp.style.display='none';
+    document.querySelector('.creator-unlock-btn').style.display='none';
+  } else {
+    err.style.display='block';inp.value='';inp.focus();
+    setTimeout(function(){err.style.display='none';},2500);
+  }
+}
+
+/* ═══ VIDEO MODAL ═══ */
+function closeVideoModal(){
+  var m=document.getElementById('vmod');
+  m.classList.remove('open');
+  document.getElementById('vmod-body').innerHTML='';
+}
+
+/* ═══ GITHUB VIDEO SYSTEM ═══ */
+var GH_RAW='https://raw.githubusercontent.com/immahesh198/rtjstudios-/main/videos/';
+var GH_JSON=GH_RAW+'videos.json';
+var _ghVideos=[];
+
+function loadGitHubVideos(cb){
+  fetch(GH_JSON+'?t='+Date.now())
+    .then(function(r){return r.ok?r.json():[];})
+    .then(function(d){_ghVideos=Array.isArray(d)?d:[];cb(_ghVideos);})
+    .catch(function(){_ghVideos=[];cb([]);});
+}
+function ghUrl(f){return GH_RAW+encodeURIComponent(f);}
+
+function loadHomeVideos(){
+  var row=document.getElementById('home-myvideos-row');
+  if(!row)return;
+  row.innerHTML='<div style="padding:4px 2px;color:#3a5a8a;font-size:12px;display:flex;align-items:center;gap:8px;"><span style="animation:blink 1.5s ease infinite;display:inline-block;color:#3b82f6;">●</span><span>Loading from studio...</span></div>';
+  loadGitHubVideos(function(videos){
+    if(!videos.length){
+      row.innerHTML='<div style="padding:4px 2px;color:#3a5a8a;font-size:12.5px;display:flex;align-items:center;gap:8px;"><span>📭</span><span>No content yet — upload via GitHub.</span></div>';
+      return;
+    }
+    var html='';
+    videos.forEach(function(v){
+      var url=ghUrl(v.file),isImg=/\.(jpg|jpeg|png|gif|webp)$/i.test(v.file);
+      var thumb=isImg?'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;">'
+        :'<video src="'+url+'" style="width:100%;height:100%;object-fit:cover;" muted preload="metadata" playsinline></video>';
+      var badge=v.badge?'<span class="c-badge c-badge-new">'+esc(v.badge)+'</span>':'';
+      html+='<div class="c-card wide" onclick="openMedia(\''+esc(v.file)+'\',\''+esc(v.title||v.file)+'\',\''+esc(v.desc||'')+'\')"><div class="c-thumb" style="background:#0a1830;">'+thumb+'<div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div>'+badge+'</div><div class="c-info"><div class="c-title">'+esc(v.title||v.file)+'</div><div class="c-sub">'+esc(v.desc||"RTJ STUDIO'S")+'</div></div></div>';
+    });
+    row.innerHTML='<div class="h-row" style="padding:0;">'+html+'</div>';
+  });
+}
+
+function loadNewReleases(){
+  var row=document.getElementById('new-releases-row');
+  if(!row||!_ghVideos.length)return;
+  var html='';
+  _ghVideos.forEach(function(v){
+    var url=ghUrl(v.file),isImg=/\.(jpg|jpeg|png|gif|webp)$/i.test(v.file);
+    var thumb=isImg?'<img src="'+url+'" style="width:100%;height:100%;object-fit:cover;">'
+      :'<video src="'+url+'" style="width:100%;height:100%;object-fit:cover;" muted preload="metadata" playsinline></video>';
+    html+='<div class="c-card wide" onclick="openMedia(\''+esc(v.file)+'\',\''+esc(v.title||v.file)+'\',\''+esc(v.desc||'')+'\')"><div class="c-thumb" style="background:#0a1830;">'+thumb+'<div class="c-overlay"><div class="c-play"><svg viewBox="0 0 24 24" fill="#000"><polygon points="5 3 19 12 5 21 5 3"/></svg></div></div><span class="c-badge c-badge-new">NEW</span></div><div class="c-info"><div class="c-title">'+esc(v.title||v.file)+'</div><div class="c-sub">'+esc(v.desc||'RTJ Original')+'</div></div></div>';
+  });
+  document.getElementById('new-releases-row').innerHTML=html;
+}
+
+function openMedia(file,title,desc){
+  var url=ghUrl(file),isImg=/\.(jpg|jpeg|png|gif|webp)$/i.test(file);
+  document.getElementById('vmod-title').textContent=title||'Now Playing';
+  document.getElementById('vmod-body').innerHTML=isImg
+    ?'<img src="'+url+'"><div class="vmod-info"><div class="vmod-title">'+esc(title||'Image')+'</div><div class="vmod-meta">'+esc(desc||"RTJ STUDIO'S")+'</div></div>'
+    :'<video src="'+url+'" controls autoplay playsinline style="width:100%;background:#000;max-height:60vh;"></video><div class="vmod-info"><div class="vmod-title">'+esc(title||'Video')+'</div><div class="vmod-meta">'+esc(desc||"RTJ STUDIO'S")+'</div></div>';
+  document.getElementById('vmod').classList.add('open');
+}
+
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+loadHomeVideos();
+setTimeout(loadNewReleases,1500);
+</script>
+</body>
+</html>
